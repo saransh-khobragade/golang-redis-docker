@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/saransh-khobragade/golang-redis/cache"
 
@@ -10,11 +11,17 @@ import (
 )
 
 var (
-	redisCache = cache.NewRedisCache("localhost:6379", 0, 1)
+	redisCache = cache.NewRedisCache(os.Getenv("REDIS_CONNECTION_STRING"), 0, 1)
 )
 
 func main() {
 	r := gin.Default()
+
+	r.GET("/healthcheck", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "ok",
+		})
+	})
 
 	r.POST("/movies", func(ctx *gin.Context) {
 		var movie cache.Movie
@@ -109,6 +116,6 @@ func main() {
 			"message": "movie deleted successfully with id: " + id,
 		})
 	})
-	fmt.Println(r.Run(":8080"))
-
+	value := os.Getenv("PORT")
+	fmt.Println(r.Run(":" + value))
 }
