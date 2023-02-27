@@ -119,14 +119,11 @@ func main() {
 	})
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"https://react-app-k76t.onrender.com"},
-		AllowMethods:     []string{"GET"},
-		AllowHeaders:     []string{"Origin"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"*"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://react-app-k76t.onrender.com"
-		},
-		MaxAge: 12 * time.Hour,
+		MaxAge:           12 * time.Hour,
 	}))
 	value := os.Getenv("PORT")
 	fmt.Println(r.Run(":" + value))
