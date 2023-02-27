@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/saransh-khobragade/golang-redis/cache"
 )
@@ -12,22 +13,6 @@ import (
 var (
 	redisCache = cache.NewRedisCache(os.Getenv("REDIS_CONNECTION_STRING"), 0, 1)
 )
-
-func CORSMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
-		c.Next()
-	}
-}
 
 func main() {
 	r := gin.Default()
@@ -37,6 +22,8 @@ func main() {
 			"status": "ok",
 		})
 	})
+
+	r.Use(cors.Default())
 
 	r.POST("/movies", func(ctx *gin.Context) {
 		var movie cache.Movie
@@ -131,7 +118,7 @@ func main() {
 			"message": "movie deleted successfully with id: " + id,
 		})
 	})
-	r.Use(CORSMiddleware())
+
 	value := os.Getenv("PORT")
 	fmt.Println(r.Run(":" + value))
 }
