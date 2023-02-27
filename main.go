@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -118,12 +117,10 @@ func main() {
 		})
 	})
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://react-app-k76t.onrender.com"},
-		AllowMethods:     []string{"GET"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+		AllowOrigins:  []string{"https://react-app-k76t.onrender.com"},
+		AllowMethods:  []string{"GET"},
+		AllowHeaders:  []string{"Origin"},
+		ExposeHeaders: []string{"Content-Length"},
 	}))
 	value := os.Getenv("PORT")
 	fmt.Println(r.Run(":" + value))
