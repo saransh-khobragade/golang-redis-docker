@@ -118,7 +118,7 @@ func main() {
 		})
 	})
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://react-app-k76t.onrender.com"},
+		AllowOrigins:     []string{"https://golang-backend-85f4.onrender.com"},
 		AllowMethods:     []string{"GET"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
