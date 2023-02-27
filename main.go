@@ -118,7 +118,7 @@ func main() {
 		})
 	})
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://react-app-k76t.onrender.com"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"*"},
 		ExposeHeaders:    []string{"Content-Length"},
