@@ -117,10 +117,7 @@ func main() {
 		})
 	})
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"https://react-app-k76t.onrender.com"},
-		AllowMethods:  []string{"GET"},
-		AllowHeaders:  []string{"Origin"},
-		ExposeHeaders: []string{"Content-Length"},
+		AllowOrigins: []string{"https://react-app-k76t.onrender.com"},
 	}))
 	value := os.Getenv("PORT")
 	fmt.Println(r.Run(":" + value))
