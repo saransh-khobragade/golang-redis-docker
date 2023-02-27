@@ -116,9 +116,7 @@ func main() {
 			"message": "movie deleted successfully with id: " + id,
 		})
 	})
-	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"https://react-app-k76t.onrender.com"},
-	}))
+	r.Use(cors.Default())
 	value := os.Getenv("PORT")
 	fmt.Println(r.Run(":" + value))
 }
