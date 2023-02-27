@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
-	"github.com/saransh-khobragade/golang-redis/cache"
-
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/saransh-khobragade/golang-redis/cache"
 )
 
 var (
@@ -116,6 +117,14 @@ func main() {
 			"message": "movie deleted successfully with id: " + id,
 		})
 	})
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://react-app-k76t.onrender.com"},
+		AllowMethods:     []string{"GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 	value := os.Getenv("PORT")
 	fmt.Println(r.Run(":" + value))
 }
